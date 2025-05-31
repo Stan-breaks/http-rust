@@ -5,4 +5,4 @@ edition = "2024"
 
 [dependencies]
 rand = "0.9.1"
-wire = "0.0.12"
+smoltcp = "0.12.0"
