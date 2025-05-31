@@ -6,3 +6,4 @@ edition = "2024"
 [dependencies]
 rand = "0.9.1"
 smoltcp = "0.12.0"
+url = "2.5.4"
