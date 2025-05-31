@@ -1,6 +1,7 @@
 use std::fmt::{Display, Formatter, Result};
 
-use rand::{RngCore, thread_rng};
+use rand::{RngCore, rng};
+use smoltcp::wire;
 
 #[derive(Debug)]
 pub struct MacAddress([u8; 6]);
@@ -18,9 +19,14 @@ impl Display for MacAddress {
 impl MacAddress {
     pub fn new() -> MacAddress {
         let mut octets: [u8; 6] = [0; 6];
-        thread_rng().fill_bytes(&mut octets);
+        rng().fill_bytes(&mut octets);
         octets[0] |= 0b_0000_0010;
         octets[0] &= 0b_1111_1110;
         MacAddress { 0: octets }
+    }
+}
+impl Into<wire::EthernetAddress> for MacAddress {
+    fn into(self) -> wire::EthernetAddress {
+        wire::EthernetAddress { 0: self.0 }
     }
 }
