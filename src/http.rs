@@ -1,9 +1,12 @@
 use std::{
     fmt::{self, Formatter},
+    io::Error,
+    net::IpAddr,
     str::Utf8Error,
 };
 
 use rand::random;
+use smoltcp::{phy::TunTapInterface, wire::EthernetAddress};
 use url::Url;
 
 #[derive(Debug)]
@@ -15,6 +18,7 @@ enum HttpState {
 
 #[derive(Debug)]
 pub enum UpstreamError {
+    Network(Error),
     InvalidUrl,
     Content(Utf8Error),
 }
@@ -33,6 +37,12 @@ fn random_port() -> u16 {
     49152 + random::<u16>() % 16384
 }
 
-pub fn get(tap: TapInterface,mac:EthernetAddress,addr:IpAddr,url:Url->Result<(),UpstreamError>{
-    let domain_name = url.
+pub fn get(
+    tap: TunTapInterface,
+    mac: EthernetAddress,
+    addr: IpAddr,
+    url: Url,
+) -> Result<(), UpstreamError> {
+    let domain_name = url.host().unwrap();
+    Ok(())
 }
